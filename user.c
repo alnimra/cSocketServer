@@ -20,7 +20,7 @@ int main(int argc, char **argv)
 	char buf[1024];
 
 	sock = 0;
-	if (argc != 3)
+	if (argc != 4)
 	{
 		printf("USAGE ./server [HOST IP] [VALID PORT] [MSG]\n");
 		exit(1);

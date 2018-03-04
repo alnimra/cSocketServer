@@ -7,9 +7,9 @@
 
 int main(int argc, char **argv)
 {
-	int fd;
-	int sock;
-	int ret;
+	int				   fd;
+	int				   sock;
+	int				   ret;
 	struct sockaddr_in addr;
 	int				   addr_len;
 	addr_len = sizeof(addr);
@@ -46,7 +46,8 @@ int main(int argc, char **argv)
 		0)
 		printf("Could not accept the connection\n");
 	ret = read(sock, buf, 1024);
-	printf("Sending: %s to server\n", buf);
-	send(sock, msg, strlen(msg), 0);
+	if (strcmp(buf, "ping") == 0)
+		send(sock, msg, strlen(msg), 0);
+	printf("Recieved: %s\n", buf);
 	return (0);
 }
