@@ -37,6 +37,9 @@ void	create_and_bind_socket(int *fd, struct sockaddr_in *addr, int port)
 void	listen_and_accept_connections(int *fd, struct sockaddr_in *addr,
 									int *sock, int port)
 {
+	int addr_len;
+
+	addr_len = sizeof(*addr);
 	if (listen(*fd, 10) < 0)
 	{
 		printf("Unable to listen\n");
@@ -44,7 +47,7 @@ void	listen_and_accept_connections(int *fd, struct sockaddr_in *addr,
 	}
 	printf("Listening on port %d\n", port);
 	if ((*sock = accept(*fd, (struct sockaddr *)&(*addr),
-						(socklen_t *)(sizeof(*addr)))) < 0)
+						(socklen_t *) &(addr_len))) < 0)
 		printf("Could not accept the connection\n");
 }
 
