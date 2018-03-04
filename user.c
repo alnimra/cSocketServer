@@ -30,7 +30,6 @@ int main(int argc, char **argv)
 		printf("Creation of socket failed\n");
 		return (0);
 	}
-	memset(&serv_addr, '0', sizeof(serv_addr));
 	serv_addr.sin_family = AF_INET;
 	serv_addr.sin_port = htons(atoi(argv[2]));
 	if (inet_pton(AF_INET, argv[1], &serv_addr.sin_addr) <= 0)
@@ -46,5 +45,5 @@ int main(int argc, char **argv)
 	send(sock, msg, strlen(msg), 0);
 	ret = read(sock, buf, 1024);
 	printf("%s\n", buf);
-	return 0;
+	return (0);
 }
