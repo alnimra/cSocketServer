@@ -42,7 +42,6 @@ int		main(int argc, char **argv)
 {
 	struct sockaddr_in	serv_addr;
 	int					sock;
-	int					ret;
 	char				*msg;
 	char				buf[1024];
 
@@ -60,7 +59,7 @@ int		main(int argc, char **argv)
 		return (0);
 	}
 	send(sock, msg, strlen(msg), 0);
-	ret = read(sock, buf, 1024);
+	read(sock, buf, 1024);
 	printf("%s\n", buf);
 	return (0);
 }
