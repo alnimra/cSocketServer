@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   user.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mray <marvin@42.fr>                        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/03/03 20:07:49 by mray              #+#    #+#             */
+/*   Updated: 2018/03/03 20:07:51 by mray             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <sys/socket.h>
 #include <sys/types.h>
 
@@ -9,34 +21,39 @@
 #include <string.h>
 #include <unistd.h>
 
-int main(int argc, char **argv)
+void	create_and_bind_to_host_ip(int *sock, struct sockaddr_in *serv_addr,
+								char *host_ip, int port)
 {
-	struct sockaddr_in serv_addr;
-	int				   sock;
-	int				   ret;
-	char *			   msg;
+	if ((*sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+	{
+		printf("Creation of socket failed\n");
+		exit(1);
+	}
+	(*serv_addr).sin_family = AF_INET;
+	(*serv_addr).sin_port = htons(port);
+	if (inet_pton(AF_INET, host_ip, &((*serv_addr).sin_addr)) <= 0)
+	{
+		printf("Ip Address is not valid\n");
+		exit(1);
+	}
+}
+
+int		main(int argc, char **argv)
+{
+	struct sockaddr_in	serv_addr;
+	int					sock;
+	int					ret;
+	char				*msg;
+	char				buf[1024];
 
 	msg = argv[3];
-	char buf[1024];
-
 	sock = 0;
 	if (argc != 4)
 	{
 		printf("USAGE ./server [HOST IP] [VALID PORT] [MSG]\n");
 		exit(1);
 	}
-	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
-	{
-		printf("Creation of socket failed\n");
-		return (0);
-	}
-	serv_addr.sin_family = AF_INET;
-	serv_addr.sin_port = htons(atoi(argv[2]));
-	if (inet_pton(AF_INET, argv[1], &serv_addr.sin_addr) <= 0)
-	{
-		printf("Ip Address is not valid\n");
-		return (0);
-	}
+	create_and_bind_to_host_ip(&sock, &serv_addr, argv[2], atoi(argv[1]));
 	if (connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0)
 	{
 		printf("Conection to host failed");

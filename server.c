@@ -55,7 +55,6 @@ int		main(int argc, char **argv)
 {
 	int					fd;
 	int					sock;
-	int					ret;
 	struct sockaddr_in	addr;
 	char				buf[1024];
 
@@ -69,7 +68,7 @@ int		main(int argc, char **argv)
 	while (1)
 	{
 		listen_and_accept_connections(&fd, &addr, &sock, atoi(argv[1]));
-		ret = read(sock, buf, 1024);
+		read(sock, buf, 1024);
 		if (strcmp(buf, "ping") == 0)
 			send(sock, "pong pong", strlen("pong pong"), 0);
 		printf("Recieved: %s\n", buf);
