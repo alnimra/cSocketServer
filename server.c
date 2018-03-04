@@ -27,7 +27,7 @@ void	create_and_bind_socket(int *fd, struct sockaddr_in *addr, int port)
 	(*addr).sin_family = AF_INET;
 	(*addr).sin_addr.s_addr = INADDR_ANY;
 	(*addr).sin_port = htons(port);
-	if (bind(*fd, (struct sockaddr *)&addr, sizeof(addr)) < 0)
+	if (bind(*fd, (struct sockaddr *)&addr, sizeof(*addr)) < 0)
 	{
 		printf("Binding of socket to %d port failed\n", port);
 		exit(1);
