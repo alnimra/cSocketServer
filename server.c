@@ -47,7 +47,7 @@ void	listen_and_accept_connections(int *fd, struct sockaddr_in *addr,
 	}
 	printf("Listening on port %d\n", port);
 	if ((*sock = accept(*fd, (struct sockaddr *)&(*addr),
-						(socklen_t *) &(addr_len))) < 0)
+						(socklen_t *)&(addr_len))) < 0)
 		printf("Could not accept the connection\n");
 }
 
