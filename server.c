@@ -17,7 +17,7 @@ int main(int argc, char **argv)
 	char *msg;
 	msg = "pong pong\n";
 	fd = 0;
-
+	fork();
 	if (argc != 2)
 	{
 		printf("USAGE ./server [VALID PORT]\n");
@@ -33,7 +33,7 @@ int main(int argc, char **argv)
 	addr.sin_port = htons(atoi(argv[1]));
 	if (bind(fd, (struct sockaddr *)&addr, sizeof(addr)) < 0)
 	{
-		printf("Binding of socket to hoper port failed\n");
+		printf("Binding of socket to %d port failed\n", atoi(argv[1]));
 		exit(1);
 	}
 	if (listen(fd, 10) < 0)
@@ -41,13 +41,17 @@ int main(int argc, char **argv)
 		printf("Unable to listen\n");
 		exit(1);
 	}
-	printf("Listening on port %d\n...\n", atoi(argv[1]));
+	printf("Listening on port %d\n", atoi(argv[1]));
 	if ((sock = accept(fd, (struct sockaddr *)&addr, (socklen_t *)&addr_len)) <
 		0)
 		printf("Could not accept the connection\n");
-	ret = read(sock, buf, 1024);
-	if (strcmp(buf, "ping") == 0)
-		send(sock, msg, strlen(msg), 0);
-	printf("Recieved: %s\n", buf);
+	while (1)
+	{
+
+		ret = read(sock, buf, 1024);
+		if (strcmp(buf, "ping") == 0)
+			send(sock, msg, strlen(msg), 0);
+		printf("Recieved: %s\n", buf);
+	}
 	return (0);
 }
