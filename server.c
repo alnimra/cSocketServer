@@ -71,6 +71,9 @@ int		main(int argc, char **argv)
 		read(sock, buf, 1024);
 		if (strcmp(buf, "ping") == 0)
 			send(sock, "pong pong", strlen("pong pong"), 0);
+		else
+			send(sock, "Not a valid request buddy",
+						strlen("Not a valid request buddy"), 0);
 		printf("Recieved: %s\n", buf);
 	}
 	return (0);

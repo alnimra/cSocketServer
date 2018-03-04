@@ -52,7 +52,7 @@ int		main(int argc, char **argv)
 		printf("USAGE ./server [HOST IP] [VALID PORT] [MSG]\n");
 		exit(1);
 	}
-	create_and_bind_to_host_ip(&sock, &serv_addr, argv[2], atoi(argv[1]));
+	create_and_bind_to_host_ip(&sock, &serv_addr, argv[1], atoi(argv[2]));
 	if (connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0)
 	{
 		printf("Conection to host failed");
